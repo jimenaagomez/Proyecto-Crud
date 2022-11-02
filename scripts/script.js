@@ -1,8 +1,12 @@
 const APIUSER = "https://6362ad8466f75177ea35bc2e.mockapi.io/users";
 const container = document.getElementById("results");
+//variables globales pa usar despue'
+let id = undefined;
+let userInfo = undefined;
+let idFilter = undefined;
 
 
-
+//funcion mostrar
 function showApi(array){
     for(let elements of array){
     container.innerHTML += `
@@ -13,6 +17,7 @@ function showApi(array){
     <br> `
 }}
 
+//fetch
 document.addEventListener("DOMContentLoaded", async () => {
 
     const response = await fetch(APIUSER);
@@ -20,5 +25,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   
     userInfo = json;
     showApi(userInfo)
-    console.log(userInfo)
+})
+
+
+//cuando apreto buscar me filtra y me muestra la
+document.getElementById("btnGet1").addEventListener("click", (e)=>{
+    e.preventDefault;
+search = document.getElementById("inputGet1Id").value; 
+idFilter = userInfo.filter(({id})=>{
+    return id.indexOf(search) > -1;
+})
+showApi(idFilter)
 })
