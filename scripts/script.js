@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 //FILTRANDO LA BUSQUEDA
 document.getElementById("btnGet1").addEventListener("click", (e)=>{
     e.preventDefault;
+    container.innerHTML = ``;
 search = document.getElementById("inputGet1Id").value; 
 idFilter = userInfo.filter(({id})=>{
     return id.indexOf(search) > -1;
@@ -43,8 +44,24 @@ showApi(idFilter)
 
 document.getElementById('btnPost').addEventListener('click', (e)=>{
     e.preventDefault;
+    const name = document.getElementById("inputPostNombre");
+    const lastname = document.getElementById("inputPostApellido");
     
+    const newPost = {
+        name: name.value,
+        lastname: lastname.value,
+    }
+    console.log(newPost);
 
+    fetch(APIUSER, {
+        method: 'POST',
+        body: JSON.stringify(newPost),
+        headers: {
+            "Content-type": "application/json"
+        }
+    })
+        .then(res =>res.json())
+        .then(data => console.log(data))
 })
 
 // MODIFICANDO LA LISTA
