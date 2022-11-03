@@ -31,6 +31,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 //FILTRANDO LA BUSQUEDA
 document.getElementById("btnGet1").addEventListener("click", (e)=>{
     e.preventDefault;
+    document.getElementById('btnDelete').removeAttribute('disabled')
+    document.getElementById('btnPut').removeAttribute('disabled')
+    document.getElementById('btnPost').removeAttribute('disabled')
     container.innerHTML = ``;
 search = document.getElementById("inputGet1Id").value; 
 idFilter = userInfo.filter(({id})=>{
@@ -42,8 +45,9 @@ showApi(idFilter)
 
 // AGREGANDO A LA LISTA
 
-document.getElementById('btnPost').addEventListener('click', (e)=>{
+document.getElementById('btnPost').addEventListener('click', async(e)=>{
     e.preventDefault;
+    
     const name = document.getElementById("inputPostNombre");
     const lastname = document.getElementById("inputPostApellido");
     
@@ -62,18 +66,24 @@ document.getElementById('btnPost').addEventListener('click', (e)=>{
     })
         .then(res =>res.json())
         .then(data => console.log(data))
-})
+
+          })
 
 // MODIFICANDO LA LISTA
-document.getElementById('btnPut').addEventListener('click', (e)=>{
+document.getElementById('btnPut').addEventListener('click', async(e)=>{
     e.preventDefault;
 
 
 })
 
 //ELIMINANDO ELEMENTO DE LA LISTA
-document.getElementById('btnDelete').addEventListener('click', (e)=>{
+document.getElementById('btnDelete').addEventListener('click', async(e)=>{
     e.preventDefault;
-
+    let id = document.getElementById('inputDelete').value
+    fetch(`${APIUSER}/${id}`, {
+        method: 'DELETE',
+    })
+        
+        .then(response => console.log(response.status))
 
 })
