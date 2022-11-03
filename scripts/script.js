@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 })
 
 
-//cuando apreto buscar me filtra y me muestra la
+//FILTRANDO LA BUSQUEDA
 document.getElementById("btnGet1").addEventListener("click", (e)=>{
     e.preventDefault;
 search = document.getElementById("inputGet1Id").value; 
@@ -36,4 +36,27 @@ idFilter = userInfo.filter(({id})=>{
     return id.indexOf(search) > -1;
 })
 showApi(idFilter)
+})
+
+
+// AGREGANDO A LA LISTA
+
+document.getElementById('btnPost').addEventListener('click', (e)=>{
+    e.preventDefault;
+    
+
+})
+
+// MODIFICANDO LA LISTA
+document.getElementById('btnPut').addEventListener('click', (e)=>{
+    e.preventDefault;
+
+
+})
+
+//ELIMINANDO ELEMENTO DE LA LISTA
+document.getElementById('btnDelete').addEventListener('click', (e)=>{
+    e.preventDefault;
+
+
 })
