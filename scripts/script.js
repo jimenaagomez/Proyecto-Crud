@@ -70,7 +70,7 @@ document.getElementById('btnPost').addEventListener('click', async(e)=>{
           })
 
 // MODIFICANDO LA LISTA
-document.getElementById('btnPut').addEventListener('click', async(e)=>{
+document.getElementById('btnSendChanges').addEventListener('click', async(e)=>{
     e.preventDefault;
 
 
