@@ -27,13 +27,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     showApi(userInfo)
 })
 
+// funcion para remover disabled 
+function removeDisabled(buttons){
+    document.getElementById(buttons).removeAttribute('disabled')
+}
+
 
 //FILTRANDO LA BUSQUEDA
 document.getElementById("btnGet1").addEventListener("click", (e)=>{
     e.preventDefault;
-    document.getElementById('btnDelete').removeAttribute('disabled')
-    document.getElementById('btnPut').removeAttribute('disabled')
-    document.getElementById('btnPost').removeAttribute('disabled')
     container.innerHTML = ``;
 search = document.getElementById("inputGet1Id").value; 
 idFilter = userInfo.filter(({id})=>{
@@ -50,40 +52,109 @@ document.getElementById('btnPost').addEventListener('click', async(e)=>{
     
     const name = document.getElementById("inputPostNombre");
     const lastname = document.getElementById("inputPostApellido");
+    if (name.value && lastname.value) {
+        
+        const newPost = {
+            name: name.value,
+            lastname: lastname.value,
+        }
+        console.log(newPost);
     
-    const newPost = {
+        fetch(APIUSER, {
+            method: 'POST',
+            body: JSON.stringify(newPost),
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+            .then(res =>res.json())
+            .then(data => console.log(data))
+    }
+
+    else {
+        
+        name.value = ''
+        lastname.value = ''
+
+    }
+          })
+
+// MODIFICANDO LA LISTA 
+
+// DENTRO DEL MODAL
+document.getElementById('btnSendChanges').addEventListener('click', async(e)=>{
+    let idChanges = parseInt(document.getElementById('inputPutId').value)
+    const name = document.getElementById("inputPutNombre");
+    const lastname = document.getElementById("inputPutApellido");
+   
+    const newPut = {
         name: name.value,
         lastname: lastname.value,
     }
-    console.log(newPost);
+    console.log(newPut);
 
-    fetch(APIUSER, {
-        method: 'POST',
-        body: JSON.stringify(newPost),
-        headers: {
-            "Content-type": "application/json"
-        }
-    })
-        .then(res =>res.json())
-        .then(data => console.log(data))
+    if(document.getElementById('inputPutApellido').value  && document.getElementById('inputPutNombre').value){
+        
+        fetch(`${APIUSER}/${idChanges}`, {
+            method: 'PUT',
+            body: JSON.stringify(newPut),
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+            .then(res =>res.json())
+            .then(data => console.log(data))
+    
 
-          })
-
-// MODIFICANDO LA LISTA
-document.getElementById('btnSendChanges').addEventListener('click', async(e)=>{
-    e.preventDefault;
-
+    
+              
+    }
 
 })
 
 //ELIMINANDO ELEMENTO DE LA LISTA
 document.getElementById('btnDelete').addEventListener('click', async(e)=>{
     e.preventDefault;
+    
     let id = document.getElementById('inputDelete').value
     fetch(`${APIUSER}/${id}`, {
         method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json'
+        }
     })
         
         .then(response => console.log(response.status))
 
+})
+ 
+
+// Habilitando btns a traves de escuchar a los inputs 
+
+document.getElementById('inputPostNombre').addEventListener('input', ()=>{
+    removeDisabled('btnPost')
+})
+
+document.getElementById('inputPostApellido').addEventListener('input', ()=>{
+    removeDisabled('btnPost')
+})
+
+document.getElementById('inputDelete').addEventListener('input', ()=>{
+    removeDisabled('btnDelete')
+})
+
+document.getElementById('inputPutId').addEventListener('input', ()=>{
+    removeDisabled('btnPut')
+})
+
+document.getElementById('inputPutNombre').addEventListener('input', ()=>{
+    removeDisabled('btnSendChanges')
+})
+
+document.getElementById('inputPutApellido').addEventListener('input', ()=>{
+    removeDisabled('btnSendChanges')
+})
+
+document.getElementById('inputDelete').addEventListener('input', ()=>{
+    removeDisabled('btnDelete')
 })
