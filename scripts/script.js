@@ -158,3 +158,6 @@ document.getElementById('inputPutApellido').addEventListener('input', ()=>{
 document.getElementById('inputDelete').addEventListener('input', ()=>{
     removeDisabled('btnDelete')
 })
+
+
+// faltaria el feedback negativo en caso de errores 
