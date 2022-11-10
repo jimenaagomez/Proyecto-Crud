@@ -8,6 +8,7 @@ let idFilter = undefined;
 
 //funcion mostrar
 function showApi(array){
+    container.innerHTML = ``
     for(let elements of array){
     container.innerHTML += `
     <br>
@@ -55,10 +56,12 @@ document.getElementById('btnPost').addEventListener('click', async(e)=>{
     if (name.value && lastname.value) {
         
         const newPost = {
+            
             name: name.value,
             lastname: lastname.value,
         }
         console.log(newPost);
+        
     
         fetch(APIUSER, {
             method: 'POST',
@@ -68,7 +71,8 @@ document.getElementById('btnPost').addEventListener('click', async(e)=>{
             }
         })
             .then(res =>res.json())
-            .then(data => console.log(data))
+            .then(data =>{ userInfo.push(data);
+            showApi(userInfo)})
     }
 
     else {
@@ -103,11 +107,13 @@ document.getElementById('btnSendChanges').addEventListener('click', async(e)=>{
             }
         })
             .then(res =>res.json())
-            .then(data => console.log(data))
+            .then(data => {  userInfo.slice(data)
+                console.log(userInfo)
+            showApi(userInfo) })
     
 
     
-              
+            
     }
 
 })
@@ -124,7 +130,7 @@ document.getElementById('btnDelete').addEventListener('click', async(e)=>{
         }
     })
         
-        .then(response => console.log(response.status))
+        .then(response => console.log(status))
 
 })
  
@@ -161,3 +167,6 @@ document.getElementById('inputDelete').addEventListener('input', ()=>{
 
 
 // faltaria el feedback negativo en caso de errores 
+
+
+  
