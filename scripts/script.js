@@ -92,6 +92,7 @@ document.getElementById('btnSendChanges').addEventListener('click', async(e)=>{
     const lastname = document.getElementById("inputPutApellido");
    
     const newPut = {
+        id: document.getElementById('inputPutId').value,
         name: name.value,
         lastname: lastname.value,
     }
@@ -107,9 +108,13 @@ document.getElementById('btnSendChanges').addEventListener('click', async(e)=>{
             }
         })
             .then(res =>res.json())
-            .then(data => {  userInfo.slice(data)
-                console.log(userInfo)
-            showApi(userInfo) })
+            .then(data => { console.log(data) ;const paramId = parseInt(data.id)
+                console.log(paramId);
+                userInfo.splice(
+                  userInfo.findIndex((element) => element.id === paramId),
+                  newPut
+                );
+            showApi(userInfo)})
     
 
     
@@ -130,7 +135,14 @@ document.getElementById('btnDelete').addEventListener('click', async(e)=>{
         }
     })
         
-        .then(response => console.log(status))
+        .then(response => response.json())
+        .then(data => { console.log(data) ;const paramId = parseInt(data.id)
+            console.log(paramId);
+            userInfo.splice(
+              userInfo.findIndex((element) => element.id === paramId),
+              1
+            );
+        showApi(userInfo)})
 
 })
  
